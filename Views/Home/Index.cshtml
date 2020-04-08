@@ -1,0 +1,40 @@
+﻿@using PassportPDF.Api;
+@using PassportPDF.Model;
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html style="height: 100%">
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>DocuVieware Cloud - Standalone Viewer Demo.</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+</head>
+<body style="overflow: hidden; margin: 0;height: 100%;">
+
+    <div style="width: 100%; height: 100%;">
+        @{
+            DocuViewareApi dvApi = new DocuViewareApi();
+
+            DocuViewareGetControlParameters parameters = new DocuViewareGetControlParameters(@ViewBag.SessionID,
+                new DocuViewareControlState()
+                {
+                    ControlID = "DocuVieware1",
+                    UserLanguages = @ViewBag.Locale,
+                    MaxUploadSize = 52428800,
+                    MaxDownloadSize = 52428800,
+                    EnableMouseModeButtons = true,
+                    EnableFormFieldsEdition = true,
+                    DocumentURI = "https://www.docuvieware.com/downloads/st_exupery_le_petit_prince.pdf",
+                    CollapsedSnapIn = true,
+                    ShowDigitalSignatureSnapIn = true
+                }); ;
+
+            @Html.Raw(dvApi.DocuViewareGetControl(parameters).Element)
+        }
+    </div>
+</body>
+</html>
